@@ -71,25 +71,25 @@ class Graph {
   //   return acc;
   // }
    /** traverse graph with DFS and returns array of Node values */
-   depthFirstSearch(start) {
-    let acc = [];
-    let visited = new Set([start]);
-    let visitStack = [start];
-
-    while (visitStack.length) {
-      let current = visitStack.pop();
-      acc.push(current.value);
-
-      for (let adj of current.adjacent) {
+  depthFirstSearch(start, acc=[start.value], visited=new Set([start])) {
+    if (this.nodes.size === 0) return [];
+    let current = start;
+ 
+    for (let adj of current.adjacent) {
         if (!visited.has(adj)) {
-          visitStack.push(adj);
-          visited.add(adj);
+          acc.push(adj.value);
+          this.depthFirstSearch(adj, acc, visited.add(adj));
         }
       }
+      console.log("THIS IS ACC", acc);
+      return acc;
     }
-    console.log("THIS IS ACC", acc);
-    return acc;
-  }
+  // [S, P, X, U, V, W, Y, R, Q, T]
+  // stack: [S, P, X, U, V,W,Y,R,Q]
+  // visited: [S, P, X, U, V, W,Y,R,Q]
+  // acc: [S, P ,X, U, V, W,Y,R, Q]
+  // adjacents: [P, U], [X, Q], [U, V, Y, Q, P], [V, X, S],[W, X, U],[Y,V,T]
+  // [R, X, W],[Q, T, Y], [P, X, R]
 
   /** traverse graph with BDS and returns array of Node values */
   breadthFirstSearch(start) {}
