@@ -114,26 +114,26 @@ class Graph {
 
   /** find the distance of the shortest path from the start vertex to the end vertex */
   distanceOfShortestPath(start, end) {
-    let acc = [];
     let visited = new Set([start]);
     let visitQueue = [start];
     let counter = 0;
+
     while (visitQueue.length) {
       let current = visitQueue.shift();
-      acc.push(current.value);
+      if(current === end) return counter;
+      if (current.adjacent.has(end)) {
+        return counter++;
+      }
+      
       for (let adj of current.adjacent) {
         if (!visited.has(adj)) {
           visitQueue.push(adj);
           visited.add(adj);
-          if(adj === end){
-            return;
-          }
+        
         }
       }
+      counter++;
     }
-    console.log("THIS IS ACC", acc);
-    return ;
-
   }
 }
 
