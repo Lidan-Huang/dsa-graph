@@ -74,7 +74,7 @@ class Graph {
   depthFirstSearch(start, acc=[start.value], visited=new Set([start])) {
     if (this.nodes.size === 0) return [];
     let current = start;
- 
+    
     for (let adj of current.adjacent) {
         if (!visited.has(adj)) {
           acc.push(adj.value);
@@ -92,10 +92,49 @@ class Graph {
   // [R, X, W],[Q, T, Y], [P, X, R]
 
   /** traverse graph with BDS and returns array of Node values */
-  breadthFirstSearch(start) {}
+  breadthFirstSearch(start) {
+    let acc = [];
+    let visited = new Set([start]);
+    let visitQueue = [start];
+    
+    while (visitQueue.length) {
+      let current = visitQueue.shift();
+      acc.push(current.value);
+      for (let adj of current.adjacent) {
+        if (!visited.has(adj)) {
+          visitQueue.push(adj);
+          visited.add(adj);
+        }
+      }
+    }
+    console.log("THIS IS ACC", acc);
+    return acc;
+
+  }
 
   /** find the distance of the shortest path from the start vertex to the end vertex */
-  distanceOfShortestPath(start, end) {}
+  distanceOfShortestPath(start, end) {
+    let acc = [];
+    let visited = new Set([start]);
+    let visitQueue = [start];
+    let counter = 0;
+    while (visitQueue.length) {
+      let current = visitQueue.shift();
+      acc.push(current.value);
+      for (let adj of current.adjacent) {
+        if (!visited.has(adj)) {
+          visitQueue.push(adj);
+          visited.add(adj);
+          if(adj === end){
+            return;
+          }
+        }
+      }
+    }
+    console.log("THIS IS ACC", acc);
+    return ;
+
+  }
 }
 
 module.exports = { Graph, Node };
