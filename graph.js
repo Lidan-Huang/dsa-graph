@@ -16,7 +16,9 @@ class Graph {
   }
 
   /** add Node instance and add it to nodes property on graph. */
-  addVertex(vertex) { }
+  addVertex(vertex) { 
+    this.nodes.add(vertex);
+  }
 
   /** add array of new Node instances and adds to them to nodes property. */
   addVertices(vertexArray) { }
