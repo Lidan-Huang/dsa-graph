@@ -107,34 +107,45 @@ class Graph {
         }
       }
     }
-    console.log("THIS IS ACC", acc);
+    console.log("THIS IS ACC FOR distance", acc);
     return acc;
 
   }
 
   /** find the distance of the shortest path from the start vertex to the end vertex */
   distanceOfShortestPath(start, end) {
+    let acc = [];
     let visited = new Set([start]);
     let visitQueue = [start];
     let counter = 0;
+    let parentNode = start;
+
+    if(start === end) return 0;
 
     while (visitQueue.length) {
       let current = visitQueue.shift();
-      if(current === end) return counter;
-      if (current.adjacent.has(end)) {
-        return counter++;
-      }
       
+      acc.push(current);
+      if(current === end) break;
       for (let adj of current.adjacent) {
         if (!visited.has(adj)) {
           visitQueue.push(adj);
           visited.add(adj);
-        
         }
       }
-      counter++;
     }
-  }
-}
+    if(!acc.includes(end)) return undefined;
 
+    for(let i = 1; i < acc.length;i++){
+      if(parentNode.adjacent.has(acc[i])){
+        continue;
+      } else {
+        counter++;
+        parentNode = acc[i-1];
+      }
+    }
+    console.log("THIS IS ACC FOR distance", acc);
+    return counter + 1;
+}
+}
 module.exports = { Graph, Node };
